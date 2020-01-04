@@ -1,5 +1,7 @@
 # Online-Karten der Blühflächen
 
-Die erste Testversion der Online-Karte findet sich auf https://maps.bbr-partner.org
+Auf der Online-Karte werden die Blühflächen der BBR-Datenbank dargestellt, aus der sie direkt geladen werden.
 
-Weitere aktualisierte Dokumentation steht in der BBR-Wiki.
+In diesem Verzeichnis *maps* sind die dafür entwickelten Scripte, die JQuery und Leaflet verwenden. Mit PHP wird auf die MySQL-Datenbank zugegriffen und die GeoJSON-Datei der Kartenschicht erstellt.
+
+Weitere aktualisierte Dokumentationen sind in der BBR-Wiki.
