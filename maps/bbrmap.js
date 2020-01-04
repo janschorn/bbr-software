@@ -12,7 +12,7 @@ var hillshade_layer = L.tileLayer.wms("https://maps.heigit.org/osm-wms/service?"
     format: 'image/png',
     transparent: true,
     attribution: "OSM-WMS Uni Heidelberg © OpenStreetMap contributors, CC BY-SA"
-});  
+});
 var basemapgroup = L.layerGroup([hillshade_layer,osm_layer]);
 
 var kreis_layer = L.tileLayer.wms("https://sgx.geodatenzentrum.de/wms_vg250?", {
@@ -22,39 +22,41 @@ var kreis_layer = L.tileLayer.wms("https://sgx.geodatenzentrum.de/wms_vg250?", {
     color: '#000000',
     weight: 5,
     attribution: "<a href='https://www.govdata.de/dl-de/by-2-0' target='_blank'>© Bundesamt für Kartographie und Geodäsie</a>"
-});  
+});
 
 
 //GeoJSON Layers
 var beeIcon = L.icon({
     iconUrl: 'img/bee.png',
-    iconSize: [30, 30]
-});  
+    iconSize: [25, 25]
+});
 
 //Popups für GeoJSON Layers
 function onEachFeature(feature, layer) {
-   
-    if (feature.properties && feature.properties.name) {
-        layer.bindPopup(
-            "<h3>BBR Blühfläche</h3>" +
-            "<b>Standortbezeichnung</b>: " + feature.properties.name + "<br>" +
-            "<b>Beschreibung</b>: " + feature.properties.description + "<br>"
+    if (feature.properties) {
+        layer.bindPopup("<h3>" + feature.properties.name + "</h3>" +
+            "<b>Fläche (ha)</b>: " + feature.properties.area + "<br>"
         );
     }
 }
 
-var bee_layer = L.geoJSON(blueflaechen, {
+var bee_layer = L.geoJSON(null, {
     onEachFeature: onEachFeature,
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {icon: beeIcon})
     }
 });
 
+$.getJSON("geojson.php", function(data) {
+	bee_layer.addData(data);
+	}
+);
+
 
 //Map mit Layer Control
 var map = L.map('mapid', {
-    center: [48.300, 8.757], 
-    zoom: 12,
+    center: [51, 10], 
+    zoom: 6,
     layers:[basemapgroup,bee_layer]
 });
 
